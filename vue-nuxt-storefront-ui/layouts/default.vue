@@ -1,62 +1,117 @@
 <template>
   <div>
-    <Nuxt />
+    <LazyHydrate when-visible>
+      <TopBar class="desktop-only" />
+    </LazyHydrate>
+    <LazyHydrate when-idle>
+      <AppHeader />
+    </LazyHydrate>
+
+    <div id="layout">
+      <nuxt :key="$route.fullPath"/>
+
+      <LazyHydrate when-visible>
+        <BottomNavigation />
+      </LazyHydrate>
+      <CartSidebar />
+      <WishlistSidebar />
+      <LoginModal />
+      <Notification />
+    </div>
+    <LazyHydrate when-visible>
+      <AppFooter />
+    </LazyHydrate>
   </div>
 </template>
 
-<style>
-html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
+<script>
+import AppHeader from '~/components/AppHeader.vue';
+import BottomNavigation from '~/components/BottomNavigation.vue';
+import AppFooter from '~/components/AppFooter.vue';
+import TopBar from '~/components/TopBar.vue';
+import CartSidebar from '~/components/CartSidebar.vue';
+import WishlistSidebar from '~/components/WishlistSidebar.vue';
+import LoginModal from '~/components/LoginModal.vue';
+import LazyHydrate from 'vue-lazy-hydration';
+import Notification from '~/components/Notification';
+
+export default {
+  name: 'DefaultLayout',
+
+  components: {
+    LazyHydrate,
+    TopBar,
+    AppHeader,
+    BottomNavigation,
+    AppFooter,
+    CartSidebar,
+    WishlistSidebar,
+    LoginModal,
+    Notification
+  }
+};
+</script>
+
+<style lang="scss">
+@import "~@storefront-ui/vue/styles";
+
+#layout {
   box-sizing: border-box;
+  @include for-desktop {
+    max-width: 1240px;
+    margin: auto;
+  }
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
+// Reset CSS
+html {
+  width: auto;
+  @include for-mobile {
+    overflow-x: hidden;
+  }
+}
+body {
+  overflow-x: hidden;
+  color: var(--c-text);
+  font-size: var(--font-size--base);
+  font-family: var(--font-family--primary);
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+  color: var(--c-link);
+  &:hover {
+    color: var(--c-link-hover);
+  }
+}
+h1 {
+  font-family: var(--font-family--secondary);
+  font-size: var(--h1-font-size);
+  line-height: 1.6;
   margin: 0;
 }
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
+h2 {
+  font-family: var(--font-family--secondary);
+  font-size: var(--h2-font-size);
+  line-height: 1.6;
+  margin: 0;
 }
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
+h3 {
+  font-family: var(--font-family--secondary);
+  font-size: var(--h3-font-size);
+  line-height: 1.6;
+  margin: 0;
 }
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+h4 {
+  font-family: var(--font-family--secondary);
+  font-size: var(--h4-font-size);
+  line-height: 1.6;
+  margin: 0;
 }
 </style>
