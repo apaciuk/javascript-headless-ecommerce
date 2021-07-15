@@ -7,4 +7,6 @@ Nuxt does not seem to have a connecter for Vendure yet, so vue-nuxt-storefront-u
 
 Has demo of the original Storefront at http://six-fowl.surge.sh/
 
+and also the original Storefront Demo is in this repo.
+
 
